@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"sync"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/google/uuid"
 	"github.com/joho/godotenv"
+	"github.com/streadway/amqp"
 	"gorm.io/gorm"
 )
 
@@ -18,8 +20,15 @@ var (
 )
 
 type Config struct {
-	DBSql    *gorm.DB
-	MQTTConn mqtt.Client
+	DBSql      *gorm.DB
+	MQTTConn   mqtt.Client
+	ConnRabbit *amqp.Connection
+	Coord      CoordTJ
+}
+
+type CoordTJ struct {
+	Latitude  float64
+	Longitude float64
 }
 
 var (
@@ -39,11 +48,29 @@ func InitConfigPool() *sync.Pool {
 		log.Fatalln("error DB Use")
 	}
 
+	lat, err := strconv.ParseFloat(os.Getenv("LAT"), 64)
+	if err != nil {
+		log.Fatalln("LAT is empty")
+	}
+
+	lon, err := strconv.ParseFloat(os.Getenv("LON"), 64)
+	if err != nil {
+		log.Fatalln("LAT is empty")
+	}
+
+	connMQTT := InitConnMQTT()
+	connRabbit := InitConfRabbit()
+
 	DataPool := sync.Pool{
 		New: func() interface{} {
 			return &Config{
-				DBSql:    DBSql,
-				MQTTConn: InitConnMQTT(),
+				DBSql:      DBSql,
+				MQTTConn:   connMQTT,
+				ConnRabbit: connRabbit,
+				Coord: CoordTJ{
+					Latitude:  lat,
+					Longitude: lon,
+				},
 			}
 		},
 	}
@@ -66,5 +93,26 @@ func InitConnMQTT() (client mqtt.Client) {
 		return
 	}
 	fmt.Println("Connected to Mosquitto")
+	return
+}
+
+func InitConfRabbit() (conn *amqp.Connection) {
+	fmt.Println("Starting rabbitmq")
+
+	amqpUser := os.Getenv("AMQP_USER")
+	amqpPass := os.Getenv("AMQP_PASS")
+	amqpHost := os.Getenv("AMQP_HOST")
+	amqpPort := os.Getenv("AMQP_PORT")
+
+	if amqpUser == "" || amqpPass == "" || amqpHost == "" || amqpPort == "" {
+		log.Fatalln(fmt.Errorf("Failed Connect Rabbit : Invalid Data Rabbit"))
+	}
+	conRabbit := fmt.Sprintf("amqp://%s:%s@%s:%s/", amqpUser, amqpPass, amqpHost, amqpPort)
+	conn, err := amqp.Dial(conRabbit)
+	if err != nil {
+		log.Fatalf("Gagal terkoneksi ke RabbitMQ: %v", err)
+	}
+
+	fmt.Println("Successfullt connect rabbitmq")
 	return
 }

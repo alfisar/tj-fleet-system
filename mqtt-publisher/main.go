@@ -19,8 +19,8 @@ func main() {
 	for range ticker.C {
 		data := domain.VehicleLocation{
 			VehicleID: vehicleID,
-			Lat:       -6.200000 + float64(time.Now().Second())*0.0001,
-			Lng:       106.816666 + float64(time.Now().Second())*0.0001,
+			Lat:       -6.25376 - 0.0001,
+			Lng:       106.87650 + 0.0001,
 			Timestamp: time.Now().Unix(),
 		}
 

@@ -3,5 +3,6 @@ go 1.20
 use (
 	./fleet-api
 	./fleet-ingestion
+	./geofence-worker
 	./mqtt-publisher
 )

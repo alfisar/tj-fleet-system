@@ -16,11 +16,12 @@ func main() {
 	ticker := time.NewTicker(2 * time.Second)
 	defer ticker.Stop()
 
+	i := 0.0001
 	for range ticker.C {
 		data := domain.VehicleLocation{
 			VehicleID: vehicleID,
-			Lat:       -6.25376 - 0.0001,
-			Lng:       106.87650 + 0.0001,
+			Lat:       -6.25376 - i,
+			Lng:       106.87650 + i,
 			Timestamp: time.Now().Unix(),
 		}
 
@@ -28,5 +29,6 @@ func main() {
 		token := client.Publish(topic, 0, false, payload)
 		token.Wait()
 		fmt.Println("Published:", string(payload))
+		i += 0.0001
 	}
 }

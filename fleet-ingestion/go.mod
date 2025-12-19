@@ -7,6 +7,8 @@ require (
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/google/uuid v1.6.0
 	github.com/joho/godotenv v1.5.1
+	github.com/streadway/amqp v1.1.0
+	github.com/umahmood/haversine v0.0.0-20151105152445-808ab04add26
 	gorm.io/driver/postgres v1.5.6
 	gorm.io/gorm v1.25.7
 )

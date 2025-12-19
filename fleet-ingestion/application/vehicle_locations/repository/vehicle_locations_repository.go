@@ -17,8 +17,8 @@ func NewFleetIngestionRepository() *fleetIngestionRepositry {
 
 func (r *fleetIngestionRepositry) Insert(ctx context.Context, conn *gorm.DB, data domain.VehicleLocation) (err error) {
 	defer func() {
-		if r := recover(); r != nil {
-			err = fmt.Errorf(fmt.Sprintf("%s", r))
+		if recov := recover(); recov != nil {
+			err = fmt.Errorf(fmt.Sprintf("%s", recov))
 		}
 	}()
 

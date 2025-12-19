@@ -21,7 +21,7 @@ func main() {
 			VehicleID: vehicleID,
 			Lat:       -6.200000 + float64(time.Now().Second())*0.0001,
 			Lng:       106.816666 + float64(time.Now().Second())*0.0001,
-			Timestamp: time.Now().Format(time.RFC3339),
+			Timestamp: time.Now().Unix(),
 		}
 
 		payload, _ := json.Marshal(data)

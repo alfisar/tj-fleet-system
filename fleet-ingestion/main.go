@@ -2,6 +2,7 @@ package main
 
 import (
 	"fleet-ingestion/config"
+	"fleet-ingestion/routing"
 	"fmt"
 	"log"
 	"os"
@@ -37,8 +38,8 @@ func main() {
 		go func(workerID int) {
 			defer wg.Done()
 			for msg := range messages {
-				fmt.Println("worker get message : " + strconv.Itoa(workerID))
-				fmt.Println(msg)
+				fmt.Println("worker " + strconv.Itoa(workerID) + " get message : " + string(msg.Payload()))
+				routing.Routing(msg)
 			}
 		}(i)
 	}

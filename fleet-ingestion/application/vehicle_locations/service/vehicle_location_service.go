@@ -52,14 +52,14 @@ func (s vehicleLocationService) VehicleLocation(ctx context.Context, poolData *c
 			return
 		}
 
-		channel, errData := poolData.ConnRabbit.Channel()
+		channel, errData := poolData.Rabbit.ConnRabbit.Channel()
 		if errData != nil {
 			err = errData
 			return
 		}
 		defer channel.Close()
 
-		err = s.repoRabbit.Publish("fleet.events", "geofence.alerts", string(message), channel)
+		err = s.repoRabbit.Publish(poolData.Rabbit.ExchangeName, poolData.Rabbit.Key, string(message), channel)
 		if err != nil {
 			return
 		}

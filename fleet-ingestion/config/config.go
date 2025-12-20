@@ -2,11 +2,13 @@ package config
 
 import (
 	"fleet-ingestion/database"
+	"fleet-ingestion/helper/surounding"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
 	"sync"
+	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/google/uuid"
@@ -20,12 +22,16 @@ var (
 )
 
 type Config struct {
-	DBSql      *gorm.DB
-	MQTTConn   mqtt.Client
-	ConnRabbit *amqp.Connection
-	Coord      CoordTJ
+	DBSql    *gorm.DB
+	MQTTConn mqtt.Client
+	Rabbit   RabbitMQ
+	Coord    CoordTJ
 }
-
+type RabbitMQ struct {
+	ConnRabbit   *amqp.Connection
+	ExchangeName string
+	Key          string
+}
 type CoordTJ struct {
 	Latitude  float64
 	Longitude float64
@@ -59,14 +65,18 @@ func InitConfigPool() *sync.Pool {
 	}
 
 	connMQTT := InitConnMQTT()
-	connRabbit := InitConfRabbit()
+	connRabbit, exchange, key := InitConfRabbit()
 
 	DataPool := sync.Pool{
 		New: func() interface{} {
 			return &Config{
-				DBSql:      DBSql,
-				MQTTConn:   connMQTT,
-				ConnRabbit: connRabbit,
+				DBSql:    DBSql,
+				MQTTConn: connMQTT,
+				Rabbit: RabbitMQ{
+					ConnRabbit:   connRabbit,
+					ExchangeName: exchange,
+					Key:          key,
+				},
 				Coord: CoordTJ{
 					Latitude:  lat,
 					Longitude: lon,
@@ -96,23 +106,42 @@ func InitConnMQTT() (client mqtt.Client) {
 	return
 }
 
-func InitConfRabbit() (conn *amqp.Connection) {
+func InitConfRabbit() (conn *amqp.Connection, exchangeName string, key string) {
 	fmt.Println("Starting rabbitmq")
 
 	amqpUser := os.Getenv("AMQP_USER")
 	amqpPass := os.Getenv("AMQP_PASS")
 	amqpHost := os.Getenv("AMQP_HOST")
 	amqpPort := os.Getenv("AMQP_PORT")
+	amqpExchange := os.Getenv("AMQP_EXCHANGE")
+	amqpQueue := os.Getenv("AMQP_QUEUE")
+	amqpKey := os.Getenv("AMQP_KEY")
 
-	if amqpUser == "" || amqpPass == "" || amqpHost == "" || amqpPort == "" {
+	if amqpUser == "" || amqpPass == "" || amqpHost == "" || amqpPort == "" || amqpExchange == "" || amqpQueue == "" || amqpKey == "" {
 		log.Fatalln(fmt.Errorf("Failed Connect Rabbit : Invalid Data Rabbit"))
 	}
 	conRabbit := fmt.Sprintf("amqp://%s:%s@%s:%s/", amqpUser, amqpPass, amqpHost, amqpPort)
 	conn, err := amqp.Dial(conRabbit)
 	if err != nil {
-		log.Fatalf("Gagal terkoneksi ke RabbitMQ: %v", err)
+		for i := 0; i < 5; i++ {
+			conRabbit := fmt.Sprintf("amqp://%s:%s@%s:%s/", amqpUser, amqpPass, amqpHost, amqpPort)
+			conn, err = amqp.Dial(conRabbit)
+			if err != nil {
+				fmt.Println("Waiting for RabbitMQ...")
+				time.Sleep(2 * time.Second)
+			} else {
+				break
+			}
+		}
+		if err != nil {
+			log.Fatalf("Gagal terkoneksi ke RabbitMQ: %v", err)
+		}
 	}
 
 	fmt.Println("Successfullt connect rabbitmq")
+
+	surounding.InitExchangeQueue(conn, amqpExchange, amqpQueue, amqpKey)
+	exchangeName = amqpExchange
+	key = amqpKey
 	return
 }

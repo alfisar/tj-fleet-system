@@ -8,13 +8,13 @@ import (
 func main() {
 	poolData := config.DataPool.Get().(*config.Config)
 
-	ch, err := poolData.ConnRabbit.Channel()
+	ch, err := poolData.Rabbit.ConnRabbit.Channel()
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	msgs, err := ch.Consume(
-		"geofence_alerts",
+		poolData.Rabbit.QueueName,
 		"worker geofence",
 		true,
 		false,

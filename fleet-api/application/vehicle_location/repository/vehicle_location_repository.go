@@ -28,7 +28,7 @@ func (r *vehicleLocationRepository) GetLast(ctx context.Context, conn *gorm.DB, 
 		return
 	}
 
-	err = conn.WithContext(ctx).Debug().Table("vehicle_location").Where(where).Last(&data).Error
+	err = conn.WithContext(ctx).Debug().Table("vehicle_location").Where(where).Order("timestamp DESC").Find(&data).Error
 	return
 }
 

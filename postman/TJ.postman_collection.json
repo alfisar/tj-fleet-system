@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "98c7b1d7-389e-43b8-9fe7-2e08468d8993",
+		"name": "TJ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5721353",
+		"_collection_link": "https://dark-space-103174.postman.co/workspace/stroberi-kasir~3ae12bcc-7831-4dd6-98ce-7b89ff9691b4/collection/5721353-98c7b1d7-389e-43b8-9fe7-2e08468d8993?action=share&source=collection_link&creator=5721353"
+	},
+	"item": [
+		{
+			"name": "Get Last",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/vehicles/B1234XYZ/location",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"vehicles",
+						"B1234XYZ",
+						"location"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicles/B1234XYZ/location",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"B1234XYZ",
+								"location"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 07:53:04 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "233"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, Content-Type, Accept, Authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success'\",\n    \"code\": 0,\n    \"message\": \"Success Menampilkan Data\",\n    \"data\": {\n        \"vehicle_id\": \"B1234XYZ\",\n        \"latitude\": -6.1987,\n        \"longitude\": 106.817966,\n        \"timestamp\": 1766130673\n    },\n    \"metadata\": {\n        \"timestamp\": \"2025-12-19T14:53:04+07:00\",\n        \"version\": \"v1\"\n    }\n}"
+				},
+				{
+					"name": "Failed",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicles/B1234XYA/location",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"B1234XYA",
+								"location"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 07:53:23 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "56"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, Content-Type, Accept, Authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"code\": 202,\n    \"message\": \"Data not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get History",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/vehicles/B1234XYZ/history?start=1766199201&end=1766199205",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"vehicles",
+						"B1234XYZ",
+						"history"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "1766199201"
+						},
+						{
+							"key": "end",
+							"value": "1766199205"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicles/B1234XYZ/history?start=1766130670&end=1766130680",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"B1234XYZ",
+								"history"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "1766130670"
+								},
+								{
+									"key": "end",
+									"value": "1766130680"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 07:54:33 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "508"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, Content-Type, Accept, Authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success'\",\n    \"code\": 0,\n    \"message\": \"Success Menampilkan Data\",\n    \"data\": [\n        {\n            \"vehicle_id\": \"B1234XYZ\",\n            \"latitude\": -6.1987,\n            \"longitude\": 106.817966,\n            \"timestamp\": 1766130673\n        },\n        {\n            \"vehicle_id\": \"B1234XYZ\",\n            \"latitude\": -6.1985,\n            \"longitude\": 106.818166,\n            \"timestamp\": 1766130675\n        },\n        {\n            \"vehicle_id\": \"B1234XYZ\",\n            \"latitude\": -6.1983,\n            \"longitude\": 106.818366,\n            \"timestamp\": 1766130677\n        },\n        {\n            \"vehicle_id\": \"B1234XYZ\",\n            \"latitude\": -6.1981,\n            \"longitude\": 106.818566,\n            \"timestamp\": 1766130679\n        }\n    ],\n    \"metadata\": {\n        \"timestamp\": \"2025-12-19T14:54:33+07:00\",\n        \"version\": \"v1\"\n    }\n}"
+				},
+				{
+					"name": "No Data",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicles/B1234XYA/history?start=1766130670&end=1766130680",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"B1234XYA",
+								"history"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "1766130670"
+								},
+								{
+									"key": "end",
+									"value": "1766130680"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 07:54:54 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "145"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, Content-Type, Accept, Authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success'\",\n    \"code\": 0,\n    \"message\": \"Success Menampilkan Data\",\n    \"data\": [],\n    \"metadata\": {\n        \"timestamp\": \"2025-12-19T14:54:54+07:00\",\n        \"version\": \"v1\"\n    }\n}"
+				},
+				{
+					"name": "Failed",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicles/B1234XYA/history?start=1766130670&end=1766130650",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"B1234XYA",
+								"history"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "1766130670"
+								},
+								{
+									"key": "end",
+									"value": "1766130650"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 19 Dec 2025 07:55:15 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "124"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, Content-Type, Accept, Authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"code\": 101,\n    \"message\": \"Invalid data input\",\n    \"errors\": \"Invalid Data Query : start cannot be bigger than end\"\n}"
+				}
+			]
+		}
+	]
+}
